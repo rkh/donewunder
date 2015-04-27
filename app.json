@@ -1,0 +1,23 @@
+{
+  "name": "DoneWunder",
+  "description": "Automatically post completed Wunderlist items to iDoneThis.",
+  "repository": "https://github.com/rkh/donewunder",
+  "keywords": [
+    "wunderlist",
+    "idonethis",
+    "webhooks"
+  ],
+  "scripts": {
+    "postdeploy": "script/migrate"
+  },
+  "env": {
+    "WUNDERLIST_CLIENT_ID": {
+      "description": "Wunderlist Client ID (https=>//developer.wunderlist.com/applications)",
+      "required": true
+    },
+    "WUNDERLIST_CLIENT_SECRET": {
+      "description": "Wunderlist Client Secret (https=>//developer.wunderlist.com/applications)",
+      "required": true
+    }
+  }
+}

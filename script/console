@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+require_relative '../.env'
+require 'bundler/setup'
+require 'done_wunder'
+require 'pry'
+
+DoneWunder.pry(quiet: true, prompt: Pry::SIMPLE_PROMPT)

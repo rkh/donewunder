@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+cd "$(dirname "$0")/.."
+
+[ -f .env ] && source .env
+[ $PORT ]        || PORT=5000
+[ $RACK_ENV ]    || RACK_ENV=development
+[ $RACK_HANDLER] || RACK_HANDLER=puma
+
+export WUNDERLIST_CLIENT_ID WUNDERLIST_CLIENT_SECRET DATABASE_URL RACK_ENV PORT RACK_HANDLER
+
+cmd="bundle exec rackup -I lib -s $RACK_HANDLER -p $PORT"
+[[ $RACK_ENV == "development" ]] && exec bundle exec rerun -p '**/*.{rb,ru}' "$cmd -o 127.0.0.1"
+exec $cmd

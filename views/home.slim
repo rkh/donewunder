@@ -1,0 +1,52 @@
+h1 Welcome, #{current_user.name}!
+
+form action="/add" method="post"
+
+  h3 Add a new Hook
+
+  table
+    tr
+      td
+        label for="wunderlist" Wunderlist list:
+      td
+        select name="wunderlist" style="width: 200px"
+          - wunderlist.lists.each do |list|
+            - if list['type'] == 'list'
+              option value=list['id'] = list['title']
+    tr
+      td
+        label for="done_this" iDoneThis team:
+      td
+        select name="done_this" style="width: 200px"
+          - done_this.teams.each do |team|
+            option value=team['short_name'] = team['name']
+
+    tr
+      td
+        label for="done_this" Prefix (optional):
+      td
+        input type="text" name="prefix" style="width: 200px"
+
+    tr
+      td
+        input type="checkbox" name="include_subtasks" 
+        label for="include_subtasks" include subtasks
+      td style="text-align: right"
+        input type="submit" value="connect"
+
+- if current_user.hooks.any?
+  h3 Existing Hooks
+
+  form action="/delete" method="post"
+    - current_user.hooks.each do |hook|
+      .hook-info
+        input type="checkbox" name="hooks[#{hook.id}]" 
+        label for="hooks[#{hook.id}]"
+          | Automatically post <b>completed tasks#{" and subtasks" if hook.include_subtasks}</b> from <b>#{wunderlist_name(hook)}</b> to <b>#{done_this_name(hook)}</b>. 
+          - if hook.prefix.to_s != ""
+            | Prefix entires with <tt>#{hook.prefix.inspect}</tt>.
+    input type="submit" value="delete selected"
+
+  / ul
+  /   - current_user.hooks.each do |hook|
+  /     li 

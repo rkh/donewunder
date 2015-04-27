@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+require_relative '../.env'
+require 'bundler/setup'
+require 'done_wunder'
+
+Sequel.extension(:migration)
+Sequel::Migrator.apply(DoneWunder.database, File.expand_path('../db/migrations', __dir__))

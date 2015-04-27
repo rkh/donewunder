@@ -1,0 +1,12 @@
+- if defined? message and message
+ p = message
+- else
+  p Great, now that you've connected your Wunderlist account, let's hook up your iDoneThis account as well.
+
+form method="post" action=uri('/done')
+  == csrf
+  label for="done_this_token" Your iDoneThis token: 
+  input name="done_this_token" value=params[:done_this_token]
+  input type="submit" value="submit"
+
+p You can find your token in your <a href="https://idonethis.com/api/token/">account settings</a>.
